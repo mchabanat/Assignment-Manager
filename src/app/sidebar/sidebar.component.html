@@ -1,0 +1,11 @@
+<div class="sidebar">
+    <div class="linksSection">
+        <h2>Assignment Manager</h2>
+        <a routerLink="/home">Home</a>
+        <a routerLink="/add">Add assignment</a>
+    </div>
+    <div class="loginSection">
+        <a (click)="login()" id="loginBtn" *ngIf="!isLoggedIn()">Login</a>
+        <a (click)="logout()" id="logoutBtn" *ngIf="isLoggedIn()">Logout</a>
+    </div>
+</div>

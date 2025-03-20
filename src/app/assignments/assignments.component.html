@@ -1,0 +1,53 @@
+<h2>{{title}}</h2>
+
+<!-- <main class="container" *ngIf="!formVisible"> avant -->
+<main class="container">
+    <!-- <button class="addBtn" mat-flat-button color="accent" (click)="onAddAssignmentBtnClick()">Add Assignment</button> -->
+
+    <!-- <div class="addButton">
+        <button class="addBtn" mat-flat-button color="accent" routerLink="/add">Add Assignment</button>
+    </div> -->
+
+    <!-- <ul>
+        @for(assignment of assignments; track assignment.name) {
+            @if(assignment.submitted) {
+            <li appSubmitted routerLink="/assignment/{{assignment.id}}">
+                The assignement : {{assignment.name}} has been
+                submitted in time!
+            </li>
+            } @else {
+            <li appNotSubmitted routerLink="/assignment/{{assignment.id}}">
+                The assignement : {{assignment.name}} is still due on
+                {{assignment.dueDate}}, NOT SUBMITTED YET!
+            </li>
+            }
+        }
+    </ul> -->
+
+    <div class="listingAssignments">
+        <div class="example">
+            <i class="fas fa-question" style="color: gray;"></i>
+            <p id="name"><strong>Assignment:</strong> Example</p> 
+            <p>Due date: ?</p>
+            <p>Submission: ?</p> 
+        </div>
+        @for(assignment of assignments; track assignment.name) {
+            @if(assignment.submitted) {
+                <div class="submitted" appSubmitted routerLink="/assignment/{{assignment.id}}">
+                    <i class="fa fa-check" style="color: green;"></i>
+                    <p id="name"><strong>Assignment:</strong> {{assignment.name}}</p> 
+                    <p><strong>Due date:</strong> {{assignment.dueDate}}</p>
+                    <p><strong>Submission:</strong> Submitted</p> 
+                </div>
+            } @else {
+                <div class="notSubmitted" appNotSubmitted routerLink="/assignment/{{assignment.id}}">
+                    <i class="fa fa-times" style="color: red;"></i>
+                    <p id="name"><strong>Assignment:</strong> {{assignment.name}}</p> 
+                    <p><strong>Due date:</strong> {{assignment.dueDate}}</p>
+                    <p><strong>Submission:</strong> Not Submitted</p> 
+                </div>
+            }
+        }
+    </div>
+    <!-- <app-assignment-detail (assignmentToDelete)="onDeleteAssignment($event)" [assignmentTransmis]="assignmentSelected"></app-assignment-detail> -->
+</main>

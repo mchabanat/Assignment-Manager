@@ -1,0 +1,84 @@
+table,
+td,
+tr,
+thead,
+th {
+  border: 1px solid black;
+  border-collapse: collapse;
+  padding: 10px;
+}
+
+table {
+  border-radius: 10px;
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+td {
+  text-align: center;
+}
+
+h2 {
+  margin-bottom: 20px;
+}
+
+.listingAssignments {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.listingAssignments div {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  cursor: pointer;
+  border-radius: 10px;
+  transition: transform 0.1s ease-in-out;
+}
+.listingAssignments div:hover:not(.example) {
+  transform: scale(1.01);
+}
+.listingAssignments .example {
+  background-color: lightgray;
+  border: 1px solid gray;
+  cursor: default;
+  margin-bottom: 25px;
+}
+.listingAssignments div i {
+  width: 5%;
+  text-align: center;
+}
+.listingAssignments div p {
+  width: 25%;
+}
+
+.listingAssignments div #name {
+  width: 40%;
+}
+
+.submitted {
+  background-color: lightgreen;
+  border: 1px solid green;
+}
+
+.notSubmitted {
+  color: red;
+  background-color: rgb(255, 152, 152);
+  border: 1px solid red;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+}
+
+.addBtn {
+  align-self: flex-end;
+}
+
+li {
+  cursor: pointer;
+  margin-bottom: 5px;
+}

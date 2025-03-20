@@ -1,0 +1,11 @@
+#bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+}
+
+#delete {
+    background-color: red;
+    color: white;
+    padding: 5px 10px;
+}
