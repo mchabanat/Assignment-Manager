@@ -1,13 +1,14 @@
 import { Injectable } from '@angular/core';
 import { Assignment } from '../assignments/assignment.model';
-import { Observable, of } from 'rxjs';
+import { Observable, of, tap } from 'rxjs';
 import { LoggingService } from './logging.service';
-
+import { HttpClient } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AssignmentsService {
+  backendURL = "http://localhost:8010/api/assignments";
 
   assignments: Assignment[] = [
     {
@@ -30,19 +31,25 @@ export class AssignmentsService {
     }
   ];
 
-  constructor(private loggingService: LoggingService) { }
+  constructor(private loggingService: LoggingService,private http: HttpClient ) { }
 
   getAssignments(): Observable<Assignment[]> {
-    return of(this.assignments);
+    // return of(this.assignments); // Ancienne méthode
+    return this.http.get<Assignment[]>(this.backendURL)
+    .pipe(
+      tap(assignments => console.log("Assignments fetched from backend:", assignments))
+    );
   }
 
   getAssignment(id:number): Observable<Assignment|undefined> {
     // return of(this.assignments);
-    const a:Assignment|undefined = this.assignments.find(
+    /*const a:Assignment|undefined = this.assignments.find(
       a => a.id === id
     );
 
-    return of(a);
+    return of(a);*/ // Ancienne méthode
+
+    return this.http.get<Assignment>(this.backendURL + "/" + id);
   }
 
   addAssignment(assignment: Assignment): Observable<string> {

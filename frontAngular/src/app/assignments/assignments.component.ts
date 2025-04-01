@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { SubmittedDirective } from '../shared/submitted.directive';
 import { NotSubmittedDirective } from '../shared/not-submitted.directive';
@@ -22,7 +22,7 @@ import { RouterLink, RouterOutlet } from '@angular/router';
 })
 
 
-export class AssignmentsComponent {
+export class AssignmentsComponent implements OnInit {
   title = "Assignments listing"
   
   // ajoutActive=false;
@@ -40,7 +40,8 @@ export class AssignmentsComponent {
   }
 
   getAssignments() {
-    this.assignmentsService.getAssignments().subscribe(assignments => this.assignments = assignments);
+    this.assignmentsService.getAssignments().subscribe(assignments => 
+      this.assignments = assignments);
   }
 
   getColor(a: any) {
