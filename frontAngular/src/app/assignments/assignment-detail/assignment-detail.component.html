@@ -1,7 +1,7 @@
 <mat-card *ngIf="assignmentTransmis">
     <mat-card-content>
         <mat-card-title>{{assignmentTransmis.name}}</mat-card-title>
-        <mat-card-subtitle>{{assignmentTransmis.dueDate}}</mat-card-subtitle>
+        <mat-card-subtitle>{{assignmentTransmis.dueDate | date:'dd/MM/yyyy'}}</mat-card-subtitle>
         <mat-card-actions id="bottom">
             <mat-checkbox *ngIf="!assignmentTransmis.submitted" (click)="onAssignmentSubmitted()">Submitted</mat-checkbox>
             <button color="primary" (click)="onClickEdit()" [disabled]="!isAdmin()">Edit</button>

@@ -36,14 +36,14 @@
                 <div class="submitted" appSubmitted routerLink="/assignment/{{assignment.id}}">
                     <i class="fa fa-check" style="color: green;"></i>
                     <p id="name"><strong>Assignment:</strong> {{assignment.name}}</p> 
-                    <p><strong>Due date:</strong> {{assignment.dueDate}}</p>
+                    <p><strong>Due date:</strong> {{assignment.dueDate | date:'dd/MM/yyyy'}}</p>
                     <p><strong>Submission:</strong> Submitted</p> 
                 </div>
             } @else {
                 <div class="notSubmitted" appNotSubmitted routerLink="/assignment/{{assignment.id}}">
                     <i class="fa fa-times" style="color: red;"></i>
                     <p id="name"><strong>Assignment:</strong> {{assignment.name}}</p> 
-                    <p><strong>Due date:</strong> {{assignment.dueDate}}</p>
+                    <p><strong>Due date:</strong> {{assignment.dueDate | date:'dd/MM/yyyy'}}</p>
                     <p><strong>Submission:</strong> Not Submitted</p> 
                 </div>
             }
