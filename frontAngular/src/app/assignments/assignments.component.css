@@ -22,6 +22,46 @@ h2 {
   margin-bottom: 20px;
 }
 
+.options {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  margin-bottom: 10px;
+  gap: 10px;
+}
+.options a {
+  text-decoration: none;
+  padding: 5px 10px;
+  border-radius: 5px;
+  transition: transform 0.1s ease-in-out;
+  cursor: pointer;
+}
+.options a#populateBtn {
+  background-color: rgb(0, 0, 255);
+  border: 1px solid rgb(0, 0, 173);
+  color: white;
+}
+.options a#clearBtn {
+  background-color: red;
+  border: 1px solid rgb(167, 0, 0);
+  color: white;
+}
+
+.options a:hover {
+  transform: scale(1.01);
+}
+
+.noAssignments {
+  display: flex;
+  align-items: center;
+  color: gray;
+  cursor: default;
+}
+.noAssignments p {
+  font-size: 1.2em;
+  cursor: default;
+}
+
 .listingAssignments {
   display: flex;
   flex-direction: column;
@@ -37,7 +77,7 @@ h2 {
   border-radius: 10px;
   transition: transform 0.1s ease-in-out;
 }
-.listingAssignments div:hover:not(.example) {
+.listingAssignments div:hover:not(.example):not(.noAssignments) {
   transform: scale(1.01);
 }
 .listingAssignments .example {

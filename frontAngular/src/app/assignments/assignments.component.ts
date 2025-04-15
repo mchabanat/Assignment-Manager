@@ -10,7 +10,7 @@ import { MatDivider } from '@angular/material/divider';
 import { Assignment } from './assignment.model';
 import { AssignmentsService } from '../shared/assignments.service';
 import { RouterLink, RouterOutlet } from '@angular/router';
-
+import { data } from '../../data';
 
 
 @Component({
@@ -24,7 +24,17 @@ import { RouterLink, RouterOutlet } from '@angular/router';
 
 export class AssignmentsComponent implements OnInit {
   title = "Assignments listing"
-  
+
+  //Pagination
+  page:number = 1;
+  limit:number = 10;
+  totalDocs!:number;
+  totalPages!:number;
+  nextPage!:number;
+  prevPage!:number;
+  hasPrevPage!:boolean;
+  hasNextPage!:boolean;
+
   // ajoutActive=false;
   assignments: Assignment[] | undefined;
 
@@ -36,11 +46,42 @@ export class AssignmentsComponent implements OnInit {
     // }, 2000);
 
     // this.assignments = this.assignmentsService.getAssignments(); // Avant observables
-    this.getAssignments();
+    this.assignmentsService.getAssignmentsPaginated(this.page, this.limit)
+    .subscribe(data => {
+      this.assignments = data.docs;
+      this.totalDocs = data.totalDocs;
+      this.totalPages = data.totalPages;
+      this.nextPage = data.nextPage;
+      this.prevPage = data.prevPage;
+      this.hasPrevPage = data.hasPrevPage;
+      this.hasNextPage = data.hasNextPage;
+    });
+  }
+
+  peuplerBD() {
+    this.assignmentsService.peuplerBDavecForkJoin()
+      .subscribe(() => {
+        console.log("LA BD A ETE PEUPLEE, TOUS LES ASSIGNMENTS AJOUTES, ON RE-AFFICHE LA LISTE");
+        //  replaceUrl = true = force le refresh, même si
+        // on est déjà sur la page d’accueil
+        // Marche plus avec la dernière version d’angular
+        //this.router.navigate(["/home"], {replaceUrl:true});
+        // ceci marche :
+        window.location.reload();
+      })
+  }
+
+  clearDB() {
+    this.assignmentsService.deleteBDavecForkJoin()
+      .subscribe(() => {
+        console.log("LA BD A ETE VIDEE, TOUS LES ASSIGNMENTS SUPPRIMES, ON RE-AFFICHE LA LISTE");
+        //this.router.navigate(["/home"], {replaceUrl:true});
+        window.location.reload();
+      })
   }
 
   getAssignments() {
-    this.assignmentsService.getAssignments().subscribe(assignments => 
+    this.assignmentsService.getAssignments().subscribe(assignments =>
       this.assignments = assignments);
   }
 

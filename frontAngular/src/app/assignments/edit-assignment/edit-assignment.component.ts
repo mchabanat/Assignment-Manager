@@ -30,7 +30,7 @@ export class EditAssignmentComponent {
     const id = this.route.snapshot.paramMap.get('id');
 
     if (id) {
-      this.assignmentsService.getAssignment(+id).subscribe((assignment) => {
+      this.assignmentsService.getAssignment(id).subscribe((assignment) => {
         if (assignment) {
           this.assignment = assignment;
           this.assignmentName = assignment.name;

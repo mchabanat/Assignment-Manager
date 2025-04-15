@@ -39,10 +39,12 @@ export class AssignmentDetailComponent implements OnInit {
   }
 
   getAssignment() {
-    const id = +this.route.snapshot.params['id'];
+    const id = this.route.snapshot.params['id'];
+    console.log("ID de l'assignement : ", id);
 
     this.assignmentsService.getAssignment(id).subscribe(assignment => {
       this.assignmentTransmis = assignment;
+      console.log("Assignment transmis : ", this.assignmentTransmis);
     });
   }
 
@@ -54,12 +56,13 @@ export class AssignmentDetailComponent implements OnInit {
     if (this.assignmentTransmis) {
       this.assignmentsService.updateAssignment(this.assignmentTransmis).subscribe(message => {
         console.log(message);
+        this.router.navigate(['/home']);
       });
     }
   }
 
   onClickEdit() {
-    this.router.navigate(['/assignment', this.assignmentTransmis?.id, 'edit'], {queryParams: {nom: this.assignmentTransmis?.name}, fragment: 'edition'});
+    this.router.navigate(['/assignment', this.assignmentTransmis?._id, 'edit'], {queryParams: {nom: this.assignmentTransmis?.name}, fragment: 'edition'});
   }
 
   onDelete() {

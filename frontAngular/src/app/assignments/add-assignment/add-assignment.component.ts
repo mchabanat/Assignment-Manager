@@ -10,6 +10,7 @@ import { AssignmentsService } from '../../shared/assignments.service';
 import { Router } from '@angular/router';
 
 
+
 @Component({
   selector: 'app-add-assignment',
   imports: [FormsModule, MatInputModule, MatButtonModule, MatFormFieldModule, MatDatepickerModule, MatNativeDateModule],
@@ -37,12 +38,8 @@ export class AddAssignmentComponent {
     //   submitted: false
     // });
 
-    this.assignmentsService.addAssignment({
-      id: 0,
-      name: this.assignmentName,
-      dueDate: this.assignmentDueDate.toLocaleDateString('fr-CA'),
-      submitted: false
-    }).subscribe(message => {
+    this.assignmentsService.addAssignment(this.assignmentName, this.assignmentDueDate.toLocaleDateString('fr-CA'), false)
+    .subscribe(message => {
       console.log(message);
       this.router.navigate(['/home']);
     });
