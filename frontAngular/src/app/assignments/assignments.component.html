@@ -34,6 +34,24 @@
             <p>Due date: ?</p>
             <p>Submission: ?</p> 
         </div>
+        <nav class="pagination-nav">
+            <div class="pagination-left">
+                <a class="pageBtn" id="firstPageBtn" [class.disabled]="!hasPrevPage" mat-flat-button color="accent" (click)="goToFirstPage()"><img src="assets/images/premiere-page.png" alt="first"></a>
+                <a class="pageBtn" id="previousPageBtn" [class.disabled]="!hasPrevPage" mat-flat-button color="accent" (click)="goToPrevPage()"><img src="assets/images/page-precedente.png" alt="previous"></a>
+            </div>
+            
+            <div class="pagination-center">
+                <ng-container *ngFor="let pageNum of pagesToShow">
+                    <span *ngIf="pageNum === 0" class="ellipsis">...</span>
+                    <a *ngIf="pageNum !== 0" class="pageBtn" [class.active]="pageNum === page" mat-flat-button color="accent" (click)="goToPage(pageNum)">{{ pageNum }}</a>
+                </ng-container>
+            </div>
+
+            <div class="pagination-right">
+                <a class="pageBtn" id="nextPageBtn" [class.disabled]="!hasNextPage" mat-flat-button color="accent" (click)="goToNextPage()"><img src="assets/images/page-suivante.png" alt="next"></a>
+                <a class="pageBtn" id="lastPageBtn" [class.disabled]="!hasNextPage" mat-flat-button color="accent" (click)="goToLastPage()"><img src="assets/images/derniere-page.png" alt="last"></a>
+            </div>
+        </nav>
         @if(assignments?.length === 0) {
             <article class="noAssignments">
                 <p>Actuellement aucun assignment.</p>

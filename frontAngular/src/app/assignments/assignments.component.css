@@ -51,6 +51,7 @@ h2 {
   transform: scale(1.01);
 }
 
+
 .noAssignments {
   display: flex;
   align-items: center;
@@ -77,7 +78,7 @@ h2 {
   border-radius: 10px;
   transition: transform 0.1s ease-in-out;
 }
-.listingAssignments div:hover:not(.example):not(.noAssignments) {
+.listingAssignments div:hover:not(.example):not(.noAssignments):not(nav div) {
   transform: scale(1.01);
 }
 .listingAssignments .example {
@@ -121,4 +122,84 @@ h2 {
 li {
   cursor: pointer;
   margin-bottom: 5px;
+}
+
+nav {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 10px;
+  gap: 30px;
+}
+
+nav a {
+  text-decoration: none;
+  font-size: 1.2em;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+
+nav a img {
+  width: 20px;
+  height: 20px;
+  margin-right: 5px;
+}
+
+.pagination-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 20px 0;
+  width: 100%;
+  min-height: 50px;
+}
+
+.pagination-left, .pagination-right {
+  display: flex;
+  align-items: center;
+  min-width: 90px; 
+}
+
+.pagination-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-grow: 1;
+}
+
+.pageBtn {
+  margin: 0 5px;
+  min-width: 35px;
+  height: 35px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  border-radius: 4px;
+  text-decoration: none;
+}
+
+.pageBtn.active {
+  background-color: gray;
+  color: white;
+}
+
+.pageBtn.disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.pageBtn img {
+  width: 20px;
+  height: 20px;
+}
+
+.ellipsis {
+  margin: 0 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 35px;
 }

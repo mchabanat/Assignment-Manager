@@ -3,8 +3,8 @@ import { Assignment } from '../assignments/assignment.model';
 import { map, Observable, of, tap, forkJoin, switchMap } from 'rxjs';
 import { LoggingService } from './logging.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { data } from '../../data';
-import { datashort } from '../../datashort'; 
+import { data } from '../../assets/data/data';
+import { datashort } from '../../assets/data/datashort'; 
 
 @Injectable({
   providedIn: 'root'
@@ -100,9 +100,11 @@ export class AssignmentsService {
   }
 
   deleteBDavecForkJoin(): Observable<any> {
-    // D'abord récupérer tous les assignments
-    return this.getAssignments().pipe(
-      switchMap(assignments => {
+    // D'abord récupérer tous les assignments avec une limite élevée
+    return this.http.get<any>(this.backendURL + "?page=1&limit=1000").pipe(
+      switchMap(response => {
+        const assignments = response.docs;
+        
         // Si aucun assignment, retourner un observable avec message
         if (assignments.length === 0) {
           console.log("Aucun assignment à supprimer");
@@ -110,7 +112,7 @@ export class AssignmentsService {
         }
         
         // Créer un tableau d'observables de suppression
-        const deleteObservables = assignments.map(assignment => 
+        const deleteObservables = assignments.map((assignment: Assignment) => 
           this.deleteAssignment(assignment).pipe(
             tap(() => console.log(`Assignment ${assignment.name} supprimé`))
           )
