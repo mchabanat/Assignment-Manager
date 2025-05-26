@@ -1,11 +1,71 @@
 <mat-card *ngIf="assignmentTransmis">
-    <mat-card-content>
-        <mat-card-title>{{assignmentTransmis.name}}</mat-card-title>
-        <mat-card-subtitle>{{assignmentTransmis.dueDate | date:'dd/MM/yyyy'}}</mat-card-subtitle>
-        <mat-card-actions id="bottom">
-            <mat-checkbox *ngIf="!assignmentTransmis.submitted" (click)="onAssignmentSubmitted()">Submitted</mat-checkbox>
-            <button color="primary" (click)="onClickEdit()" [disabled]="!isAdmin()">Edit</button>
-            <button id="delete" mat-flat-button color="warn" (click)="onDelete()">Delete</button>
-        </mat-card-actions>
-    </mat-card-content>
+  <mat-card-header>
+    <div mat-card-avatar>
+      <img 
+        [src]="getSafeImageUrl(assignmentTransmis)" 
+        (error)="handleImageError($event)" 
+        alt="Subject Icon" 
+        class="subject-image"
+      >
+    </div>
+    <mat-card-title>{{ assignmentTransmis.name }}</mat-card-title>
+    <mat-card-subtitle>
+      Due: {{ assignmentTransmis.dueDate | date:'mediumDate' }}
+    </mat-card-subtitle>
+  </mat-card-header>
+
+  <mat-card-content>
+    <div class="assignment-details">
+      <p><strong>Author:</strong> {{ assignmentTransmis.author }}</p>
+      
+      <p><strong>Subject:</strong> {{ assignmentTransmis.subject?.name || 'Not specified' }}</p>
+      
+      <!-- Professor Information -->
+      <div class="professor-info" *ngIf="professorInfo">
+        <h3>Professor</h3>
+        <div class="professor-display">
+          <img [src]="professorInfo.photo" 
+               (error)="handleProfessorImageError($event)"
+               alt="Professor Photo" 
+               class="professor-avatar">
+          <span class="professor-name">{{ professorInfo.name }}</span>
+        </div>
+      </div>
+      
+      <p class="status-row">
+        <strong>Status:</strong> 
+        <mat-checkbox [checked]="assignmentTransmis.submitted" 
+                     [disabled]="!isAdmin() || assignmentTransmis.submitted || assignmentTransmis.grade === null" 
+                     (change)="onAssignmentSubmitted()" 
+                     color="primary" 
+                     class="status-checkbox">
+        </mat-checkbox>
+        <span [ngClass]="{'submitted': assignmentTransmis.submitted, 'not-submitted': !assignmentTransmis.submitted}">
+          {{ assignmentTransmis.submitted ? 'Submitted' : 'Not submitted' }}
+        </span>
+      </p>
+      
+      <!-- Always display grade and remarks section, even if not submitted -->
+      <div>
+        <p><strong>Grade:</strong> 
+          <span *ngIf="assignmentTransmis.grade !== null"> {{ assignmentTransmis.grade }}/20</span>
+          <span *ngIf="assignmentTransmis.grade === null"> Not graded yet</span>
+        </p>
+        
+        <div *ngIf="assignmentTransmis.remarks">
+          <p><strong>Remarks:</strong></p>
+          <p class="remarks">{{ assignmentTransmis.remarks }}</p>
+        </div>
+      </div>
+    </div>
+  </mat-card-content>
+
+  <mat-card-actions *ngIf="isAdmin()" class="action-buttons">
+    <button mat-raised-button color="primary" (click)="onClickEdit()" class="action-button">
+      <mat-icon>edit</mat-icon> EDIT
+    </button>
+    <button mat-raised-button color="warn" (click)="onDelete()" class="action-button">
+      <mat-icon>delete</mat-icon> DELETE
+    </button>
+  </mat-card-actions>
 </mat-card>

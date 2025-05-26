@@ -1,7 +1,94 @@
+.container {
+  max-width: 800px;
+  margin: 2rem auto;
+  padding: 1.5rem;
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.header {
+  background-color: #3f51b5;
+  color: white;
+  padding: 16px;
+  margin-bottom: 20px;
+  border-radius: 4px 4px 0 0;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+.header h1 {
+  margin: 0;
+  font-size: 24px;
+  font-weight: 500;
+  color: white;
+}
+
 .form {
-    display: flex;
-    flex-direction: column;
-    width: 450px;
-    margin: 5px;
-  }
-  
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+mat-form-field {
+  width: 100%;
+}
+
+.checkbox-container {
+  display: flex;
+  flex-direction: column;
+  margin: 0.5rem 0 1rem 0;
+  padding: 0.5rem 0;
+}
+
+.submission-note {
+  font-size: 0.85rem;
+  color: #f44336;
+  margin-top: 0.3rem;
+  margin-left: 1.8rem;
+}
+
+button {
+  align-self: center;
+  min-width: 120px;
+  margin-top: 1rem;
+}
+
+/* Professor styling */
+.professor-section {
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  padding: 12px;
+  margin-bottom: 15px;
+}
+
+.professor-section h3 {
+  margin-top: 0;
+  color: #3f51b5;
+  font-size: 16px;
+  margin-bottom: 10px;
+}
+
+.professor-card {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.professor-photo {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #3f51b5;
+}
+
+.professor-details {
+  flex: 1;
+}
+
+.professor-name {
+  margin: 0;
+  font-weight: 500;
+  font-size: 16px;
+}

@@ -9,3 +9,109 @@
     color: white;
     padding: 5px 10px;
 }
+
+.subject-image {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.assignment-details {
+  margin-top: 15px;
+  padding: 15px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+}
+
+.status-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.status-checkbox {
+  margin-right: 5px;
+}
+
+.submitted {
+  color: green;
+  font-weight: bold;
+}
+
+.not-submitted {
+  color: red;
+  font-weight: bold;
+}
+
+.remarks {
+  padding: 12px;
+  background-color: #f0f0f0;
+  border-left: 4px solid #3f51b5;
+  margin-top: 8px;
+  font-style: italic;
+  border-radius: 0 4px 4px 0;
+}
+
+.action-buttons {
+  display: flex;
+  gap: 15px;
+  padding: 16px;
+  justify-content: flex-start;
+}
+
+.action-button {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0 20px;
+  border-radius: 24px;
+  height: 40px;
+  font-weight: 500;
+  box-shadow: 0 3px 5px rgba(0, 0, 0, 0.2);
+  transition: all 0.2s ease;
+}
+
+.action-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.action-button mat-icon {
+  font-size: 18px;
+  height: 18px;
+  width: 18px;
+}
+
+.professor-info {
+  margin: 12px 0;
+  padding: 10px;
+  background-color: #f0f0f0;
+  border-radius: 6px;
+}
+
+.professor-info h3 {
+  margin-top: 0;
+  font-size: 16px;
+  color: #3f51b5;
+  margin-bottom: 8px;
+}
+
+.professor-display {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.professor-avatar {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #3f51b5;
+}
+
+.professor-name {
+  font-weight: 500;
+}

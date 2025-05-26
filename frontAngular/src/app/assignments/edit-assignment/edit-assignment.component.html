@@ -1,6 +1,9 @@
+<h2>{{title}}</h2>
 @if(assignment) {
     <div class="container">
-     <h1>Edit the assignment {{assignment.name}}</h1>
+     <div class="header">
+       <h1>{{assignment.name}}</h1>
+     </div>
      <form ngForm class="form" #formupdate (submit)="onSaveAssignment(); formupdate.reset(); ">
        <mat-form-field>
          <input matInput placeholder="Name edition" [(ngModel)]="assignmentName" name="assignment-name">
@@ -11,10 +14,62 @@
          </mat-datepicker-toggle>
          <mat-datepicker #picker></mat-datepicker>
        </mat-form-field>
+       
+       <!-- Author -->
+       <mat-form-field>
+         <input matInput placeholder="Author" [(ngModel)]="assignmentAuthor" name="author">
+       </mat-form-field>
+
+       <!-- Subject Selection -->
+       <mat-form-field>
+         <mat-label>Subject</mat-label>
+         <mat-select [(ngModel)]="assignmentSubjectName" name="subjectName" (selectionChange)="onSubjectChange()">
+           <mat-option *ngFor="let subject of subjects" [value]="subject.name">
+             {{subject.name}}
+           </mat-option>
+         </mat-select>
+       </mat-form-field>
+
+       <!-- Professor Information -->
+       <div class="professor-section" *ngIf="assignmentProfessorName">
+         <h3>Professor</h3>
+         <div class="professor-card">
+           <img [src]="assignmentProfessorPhoto" 
+                onerror="this.src='assets/images/professors/default.jpg'" 
+                alt="Professor Photo" 
+                class="professor-photo">
+           <div class="professor-details">
+             <p class="professor-name">{{assignmentProfessorName}}</p>
+           </div>
+         </div>
+       </div>
+
+       <!-- Submission Status -->
+       <div class="checkbox-container">
+         <mat-checkbox [(ngModel)]="assignmentSubmitted" name="submitted" 
+                     [disabled]="assignmentGrade === null">
+           Submitted
+         </mat-checkbox>
+         <div class="submission-note" *ngIf="assignmentGrade === null">
+           Note: Assignment must be graded before it can be marked as submitted
+         </div>
+       </div>
+
+       <!-- Grade -->
+       <mat-form-field>
+         <mat-label>Grade (out of 20)</mat-label>
+         <input matInput type="number" [(ngModel)]="assignmentGrade" name="grade" min="0" max="20">
+       </mat-form-field>
+
+       <!-- Remarks -->
+       <mat-form-field>
+         <mat-label>Remarks</mat-label>
+         <textarea matInput [(ngModel)]="assignmentRemarks" name="remarks" rows="4"></textarea>
+       </mat-form-field>
+       
        <button mat-raised-button color="primary" [disabled]="((!assignmentName)||(!assignmentDueDate))">
         Save
       </button>
     </form>
    </div>
 }
-   

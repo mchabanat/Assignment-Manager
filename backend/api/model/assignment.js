@@ -8,7 +8,19 @@ let AssignmentSchema = Schema({
     // id: Number,
     dueDate: Date,
     name: String,
-    submitted: Boolean
+    submitted: Boolean,
+    // Nouveaux champs
+    author: String,
+    subject: {
+        name: String,
+        image: String,
+        professor: {
+            name: String,
+            photo: String
+        }
+    },
+    grade: Number,
+    remarks: String
 });
 
 AssignmentSchema.plugin(aggregatePaginate);

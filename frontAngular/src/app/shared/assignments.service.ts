@@ -45,7 +45,8 @@ export class AssignmentsService {
     return this.http.get<Assignment>(this.backendURL + "/" + id);
   }
 
-  addAssignment(name:string, dueDate:string, submitted:boolean): Observable<any> {
+  addAssignment(name:string, dueDate:string, submitted:boolean, author:string = '', 
+                subject:any = null, grade:number|null = null, remarks:string = ''): Observable<any> {
     // this.assignments.push(assignment);
     // this.loggingService.log(assignment.name, "added");
 
@@ -55,17 +56,33 @@ export class AssignmentsService {
     return this.http.post<Assignment>(this.backendURL, {
       name: name,
       dueDate: dueDate,
-      submitted: submitted
+      submitted: submitted,
+      author: author,
+      subject: subject,
+      grade: grade,
+      remarks: remarks
     }, this.httpOptions);
   }
 
   updateAssignment(assignment: Assignment): Observable<any> {
-    // envoyer requete PUT en base de données mais rien a faire ici si on travaille avec un tableau 
+    // S'assurer que nous gérons tous les champs lors de la mise à jour
+    const updatedAssignment = {
+      id: assignment._id,
+      name: assignment.name,
+      dueDate: assignment.dueDate,
+      submitted: assignment.submitted,
+      author: assignment.author,
+      subject: assignment.subject,
+      grade: assignment.grade,
+      remarks: assignment.remarks
+    };
+    
+    // envoyer requête PUT en base de données mais rien a faire ici si on travaille avec un tableau 
     // this.loggingService.log(assignment.name, "updated");
 
     // return of("Assignment updated successfully");
 
-    return this.http.put<Assignment>(this.backendURL, assignment, this.httpOptions);
+    return this.http.put<Assignment>(this.backendURL, updatedAssignment, this.httpOptions);
   }
 
   deleteAssignment(assignment: Assignment): Observable<any> {
@@ -80,12 +97,12 @@ export class AssignmentsService {
 
   // private handleError<T>(operation, result?: T) {
   //   return (error: any): Observable<T> => {
-  //     console.error(error); // log to console instead
+  //     console.error(error); // afficher dans la console
   //     console.log(operation + " failed: " + error.message); 
   //     return of(result as T);
   //   };
 
-  //   // LIgne a ajouter dans les pipe : 
+  //   // Ligne à ajouter dans les pipe : 
   //   // catchError(this.handleError<any>('### catchError: getAssignments by id avec id=' + id))
   // }
 
@@ -93,7 +110,17 @@ export class AssignmentsService {
     let appelsVersAddAssignment:Observable<any>[] = [];
   
     datashort.forEach(a => {
-      appelsVersAddAssignment.push(this.addAssignment(a.name, a.dueDate, a.submitted))
+      appelsVersAddAssignment.push(
+        this.addAssignment(
+          a.name, 
+          a.dueDate, 
+          a.submitted, 
+          a.author, 
+          a.subject, 
+          a.grade, 
+          a.remarks
+        )
+      )
     });
   
     return forkJoin(appelsVersAddAssignment);
