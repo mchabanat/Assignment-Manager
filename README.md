@@ -1,4 +1,4 @@
-# AssignmentApp
+# Assignment Manager
 
 Lien pour la vidéo démo du site : [https://youtu.be/HHM4cQ1hGyY](https://youtu.be/HHM4cQ1hGyY)
 
