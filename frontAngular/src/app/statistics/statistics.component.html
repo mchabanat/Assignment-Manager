@@ -1,0 +1,130 @@
+<h2>{{title}}</h2>
+
+<div class="statistics-container">  
+  <div *ngIf="isLoading" class="loading-indicator">
+    <p>Loading statistics...</p>
+  </div>
+  
+  <div *ngIf="!isLoading" class="statistics-grid">
+    <!-- Carte Overview -->
+    <mat-card class="stat-card overview-card">
+      <mat-card-header>
+        <mat-card-title>Overview</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <div class="stat-item">
+          <div class="stat-icon">
+            <mat-icon>assignment</mat-icon>
+          </div>
+          <div class="stat-details">
+            <div class="stat-value">{{statistics.totalAssignments}}</div>
+            <div class="stat-label">Total Assignments</div>
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+    
+    <!-- Carte Submission Status -->
+    <mat-card class="stat-card submission-card">
+      <mat-card-header>
+        <mat-card-title>Submission Status</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <div class="progress-container">
+          <div class="progress-labels">
+            <span>Submitted: {{statistics.submittedCount}} ({{statistics.submissionPercentage | number:'1.0-0'}}%)</span>
+            <span>Not Submitted: {{statistics.notSubmittedCount}} ({{100 - statistics.submissionPercentage | number:'1.0-0'}}%)</span>
+          </div>
+          <mat-progress-bar
+            class="submission-progress"
+            mode="determinate"
+            [value]="statistics.submissionPercentage">
+          </mat-progress-bar>
+        </div>
+      </mat-card-content>
+    </mat-card>
+    
+    <!-- Carte Grades -->
+    <mat-card class="stat-card grades-card">
+      <mat-card-header>
+        <mat-card-title>Grades</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <div class="stat-item">
+          <div class="stat-icon">
+            <mat-icon>grade</mat-icon>
+          </div>
+          <div class="stat-details">
+            <div class="stat-value">{{statistics.averageGrade | number:'1.1-1'}}/20</div>
+            <div class="stat-label">Average Grade</div>
+          </div>
+        </div>
+        <div class="stat-note">
+          <small>Based on {{statistics.gradedAssignments}} graded assignments</small>
+        </div>
+      </mat-card-content>
+    </mat-card>
+    
+    <!-- Carte Top Subjects -->
+    <mat-card class="stat-card subjects-card">
+      <mat-card-header>
+        <mat-card-title>Top Subjects</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <div class="subjects-list">
+          <div *ngFor="let subject of statistics.topSubjects; let i = index" class="subject-item">
+            <span class="subject-rank">{{i + 1}}.</span>
+            <span class="subject-name">{{subject.name || 'Not specified'}}</span>
+            <span class="subject-count">({{subject.count}})</span>
+          </div>
+          <div *ngIf="statistics.topSubjects.length === 0" class="no-data">
+            No subject data available
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+    
+    <!-- Cartte Timeline -->
+    <mat-card class="stat-card timeline-card">
+      <mat-card-header>
+        <mat-card-title>Submission Timeline</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <div class="timeline-chart">
+          <div class="timeline-bars">
+            <div *ngFor="let item of statistics.submissionTimeline" class="timeline-bar-container">
+              <div class="timeline-bar" [style.height.%]="item.count / (statistics.totalAssignments / 6) * 100"></div>
+              <div class="timeline-label">{{item.month}}</div>
+            </div>
+            <div *ngIf="statistics.submissionTimeline.length === 0" class="no-data">
+              No timeline data available
+            </div>
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+    
+    <!-- Carte Grade Distribution -->
+    <mat-card class="stat-card distribution-card">
+      <mat-card-header>
+        <mat-card-title>Grade Distribution</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <div class="grade-chart">
+          <div class="chart-bars">
+            <div *ngFor="let item of statistics.gradeDistribution" class="chart-bar-container">
+              <div class="chart-bar" 
+                   [style.height.%]="statistics.gradedAssignments > 0 ? (item.count / statistics.gradedAssignments) * 100 * 0.8 : 0">
+                <div class="chart-value">{{item.count}}</div>
+              </div>
+              <div class="chart-label">{{item.range}}</div>
+            </div>
+          </div>
+        </div>
+        <div *ngIf="statistics.gradedAssignments === 0" class="no-data">
+          No graded assignments available
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>

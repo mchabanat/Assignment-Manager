@@ -153,4 +153,103 @@ export class AssignmentsService {
       })
     );
   }
+
+  getStatistics(): Observable<any> {
+    // Get all assignments (using a large limit to ensure we get most/all data)
+    return this.http.get<any>(this.backendURL + "?page=1&limit=1000").pipe(
+      map(response => {
+        const assignments = response.docs;
+        const totalAssignments = assignments.length;
+        
+        // Submitted vs Not Submitted Stats
+        const submittedAssignments = assignments.filter((a: Assignment) => a.submitted);
+        const submittedCount = submittedAssignments.length;
+        const notSubmittedCount = totalAssignments - submittedCount;
+        const submissionPercentage = totalAssignments > 0 ? 
+          (submittedCount / totalAssignments) * 100 : 0;
+        
+        // Grade Statistics
+        const gradedAssignments = assignments.filter((a: Assignment) => 
+          a.grade !== null && a.grade !== undefined).length;
+        
+        let totalGrades = 0;
+        assignments.forEach((a: Assignment) => {
+          if (a.grade !== null && a.grade !== undefined) {
+            totalGrades += a.grade;
+          }
+        });
+        
+        const averageGrade = gradedAssignments > 0 ? 
+          totalGrades / gradedAssignments : 0;
+        
+        // Calculate grade distribution for histogram
+        const gradeDistribution = [
+          { range: '0-5', count: 0 },
+          { range: '6-10', count: 0 },
+          { range: '11-15', count: 0 },
+          { range: '16-20', count: 0 }
+        ];
+
+        assignments.forEach((a: Assignment) => {
+          if (a.grade !== null && a.grade !== undefined) {
+            if (a.grade >= 0 && a.grade <= 5) gradeDistribution[0].count++;
+            else if (a.grade > 5 && a.grade <= 10) gradeDistribution[1].count++;
+            else if (a.grade > 10 && a.grade <= 15) gradeDistribution[2].count++;
+            else if (a.grade > 15 && a.grade <= 20) gradeDistribution[3].count++;
+          }
+        });
+        
+        // Get Top Subjects
+        const subjectCounts: {[key: string]: number} = {};
+        assignments.forEach((a: Assignment) => {
+          const subjectName = a.subject?.name || 'Not specified';
+          if (subjectCounts[subjectName]) {
+            subjectCounts[subjectName]++;
+          } else {
+            subjectCounts[subjectName] = 1;
+          }
+        });
+        
+        const topSubjects = Object.entries(subjectCounts)
+          .map(([name, count]) => ({name, count}))
+          .sort((a, b) => b.count - a.count)
+          .slice(0, 5); // Top 5 subjects
+        
+        // Create a submission timeline (by month)
+        const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 
+                            'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+        
+        const timelineCounts: {[key: string]: number} = {};
+        
+        // Initialize all months to ensure they appear in the timeline
+        monthNames.forEach(month => {
+          timelineCounts[month] = 0;
+        });
+        
+        assignments.forEach((a: Assignment) => {
+          if (a.submitted) {
+            const dueDate = new Date(a.dueDate);
+            const month = monthNames[dueDate.getMonth()];
+            timelineCounts[month]++;
+          }
+        });
+        
+        const submissionTimeline = Object.entries(timelineCounts)
+          .map(([month, count]) => ({month, count}));
+        
+        // Return the calculated statistics
+        return {
+          totalAssignments,
+          submittedCount,
+          notSubmittedCount,
+          submissionPercentage,
+          averageGrade,
+          gradedAssignments,
+          topSubjects,
+          submissionTimeline,
+          gradeDistribution  // Add the new property
+        };
+      })
+    );
+  }
 }

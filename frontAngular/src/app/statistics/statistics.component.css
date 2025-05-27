@@ -1,0 +1,325 @@
+.statistics-container {
+  padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.page-title {
+  font-size: 24px;
+  margin-bottom: 20px;
+  color: #3f51b5;
+}
+
+.loading-indicator {
+  text-align: center;
+  padding: 40px;
+  color: #666;
+}
+
+/* Changed to always use 2 columns */
+.statistics-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;  /* Always 2 equal columns */
+  gap: 20px;
+}
+
+/* Set fixed dimensions for all stat cards */
+.stat-card {
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s, box-shadow 0.2s;
+  min-height: 250px;  /* Minimum height for all cards */
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+/* For the overview and grades cards which may need less height */
+.overview-card, .grades-card {
+  min-height: 200px;
+}
+
+/* For the timeline and subjects cards which need more space */
+.timeline-card, .subjects-card {
+  min-height: 300px;
+}
+
+.stat-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+mat-card-header {
+  border-bottom: 1px solid #eee;
+  padding-bottom: 10px;
+  flex-shrink: 0; /* Prevent header from shrinking */
+}
+
+mat-card-title {
+  font-size: 18px;
+  font-weight: 500;
+}
+
+mat-card-content {
+  flex-grow: 1; /* Allow content to grow and fill space */
+  overflow: auto; /* Add scrolling if content overflows */
+  padding: 15px;
+}
+
+.stat-item {
+  display: flex;
+  align-items: center;
+  padding: 15px 0;
+}
+
+.stat-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 50px;
+  height: 50px;
+  background-color: #e1f5fe;
+  border-radius: 50%;
+  margin-right: 15px;
+  flex-shrink: 0; /* Prevent icon from shrinking */
+}
+
+.stat-icon mat-icon {
+  color: #0288d1;
+  font-size: 24px;
+  width: 24px;
+  height: 24px;
+}
+
+.stat-value {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.stat-label {
+  color: #666;
+  font-size: 14px;
+}
+
+.progress-container {
+  padding: 15px 0;
+}
+
+.progress-labels {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+  font-size: 14px;
+}
+
+.submission-progress {
+  height: 10px;
+  border-radius: 5px;
+}
+
+.stat-note {
+  color: #666;
+  font-style: italic;
+  margin-top: 10px;
+  text-align: center;
+}
+
+.subjects-list {
+  padding: 15px 0;
+  max-height: 200px; /* Maximum height for subject list */
+  overflow-y: auto; /* Add vertical scrolling if needed */
+}
+
+.subject-item {
+  display: flex;
+  align-items: center;
+  padding: 8px 0;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.subject-rank {
+  font-weight: bold;
+  margin-right: 10px;
+  width: 25px;
+  flex-shrink: 0; /* Prevent rank from shrinking */
+}
+
+.subject-name {
+  flex: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis; /* Add ellipsis if text overflows */
+}
+
+.subject-count {
+  color: #666;
+  flex-shrink: 0; /* Prevent count from shrinking */
+  margin-left: 8px;
+}
+
+.timeline-chart {
+  height: 200px;
+  padding: 15px 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.timeline-bars {
+  height: 100%;
+  display: flex;
+  justify-content: space-around;
+  align-items: flex-end;
+}
+
+.timeline-bar-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100%;
+  flex: 1;
+}
+
+.timeline-bar {
+  width: 30px;
+  min-height: 1%;
+  background-color: #3f51b5;
+  border-radius: 3px 3px 0 0;
+  margin-bottom: 8px;
+}
+
+.timeline-label {
+  font-size: 12px;
+  color: #666;
+  text-align: center;
+  white-space: nowrap;
+}
+
+.no-data {
+  text-align: center;
+  color: #999;
+  font-style: italic;
+  padding: 20px;
+}
+
+.overview-card .stat-icon {
+  background-color: #e8f5e9;
+}
+
+.overview-card .stat-icon mat-icon {
+  color: #43a047;
+}
+
+.grades-card .stat-icon {
+  background-color: #fff8e1;
+}
+
+.grades-card .stat-icon mat-icon {
+  color: #ffa000;
+}
+
+/* Styles for the grade distribution chart */
+.grade-chart {
+  height: 200px;
+  padding: 15px 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.chart-bars {
+  height: 100%;
+  display: flex;
+  justify-content: space-around;
+  align-items: flex-end;
+}
+
+.chart-bar-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100%;
+  flex: 1;
+  position: relative;
+}
+
+.chart-bar {
+  width: 40px;
+  background-color: #ff9800;
+  border-radius: 3px 3px 0 0;
+  min-height: 10px; /* Ensure visibility even for small values */
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  transition: height 0.5s ease;
+}
+
+.chart-value {
+  position: absolute;
+  top: -20px;
+  font-weight: bold;
+  font-size: 14px;
+  color: #333;
+}
+
+.chart-label {
+  margin-top: 10px;
+  font-size: 12px;
+  color: #666;
+  text-align: center;
+}
+
+.distribution-card {
+  min-height: 280px;
+}
+
+/* Media queries for better responsiveness */
+@media (max-width: 768px) {
+  .statistics-grid {
+    grid-template-columns: 1fr 1fr; /* Keep 2 columns */
+    gap: 10px; /* Smaller gap on mobile */
+  }
+  
+  .stat-card {
+    min-height: 180px; /* Smaller height on mobile */
+  }
+  
+  /* Make text smaller on mobile */
+  .stat-value {
+    font-size: 20px;
+  }
+  
+  .stat-label {
+    font-size: 12px;
+  }
+  
+  /* Make chart layout more compact */
+  .timeline-bar {
+    width: 20px;
+  }
+  
+  .timeline-label {
+    font-size: 10px;
+  }
+}
+
+/* Extra small screens (phones under 576px) */
+@media (max-width: 576px) {
+  .statistics-grid {
+    grid-template-columns: 1fr 1fr; /* Maintain 2 columns even on very small screens */
+    gap: 8px;
+  }
+  
+  .stat-card {
+    min-height: 150px;
+  }
+  
+  .stat-icon {
+    width: 40px;
+    height: 40px;
+  }
+  
+  .stat-value {
+    font-size: 18px;
+  }
+}
