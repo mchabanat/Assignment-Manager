@@ -16,7 +16,9 @@ export class AssignmentsService {
     })
   };
 
-  backendURL = "http://localhost:8010/api/assignments";
+  // backendURL = "http://localhost:8010/api/assignments";
+  backendURL = "https://assignment-manager-back.onrender.com/api/assignments";
+
 
   assignments: Assignment[] = [];
 
